@@ -1,0 +1,81 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>  
+    <window vflex="1" title="" border="none" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('view.view_PD04_ERP_NG')"
+	validationMessages="@id('vmsgs')" >
+	<borderlayout vflex="1">
+	<north>
+		<toolbar>
+			<hlayout spacing="10px">									            		
+		            		<toolbarbutton label="DATE" style="color:#666666;font-size:12px;" disabled="false"/>	
+		            		<datebox width="110px" value="@bind(vm.startDate)" format='dd-MM-yyyy' readonly="true" 
+		            		tooltiptext="Select Start Date."/>		            		
+		            		
+		            		<toolbarbutton label="TO" style="color:#666666;font-size:12px;" disabled="false"/>	  		           
+		            		<datebox width="110px" value="@bind(vm.endDate)" format='dd-MM-yyyy' readonly="true" 
+		            		tooltiptext="Select End Date."/>		
+		            				            				            				            		
+		            		<combobox width="160px" readonly="true" model="@load(vm.model_list_itemGroup)"
+								selectedItem="@bind(vm.select_itemGroup)"
+								value="@load(vm.select_itemGroup_name) @bind(vm.select_itemGroup_name)"								
+								tooltiptext="Select Product Group and Click Preview."
+								onOK="@command('onload_data')"
+								placeholder="Product Group..."
+								>
+								<template name="model">
+									<comboitem label="@load(each.item_product_group)" value="@load(each.item_product_group)" 
+									
+									/>
+								</template>
+							</combobox>	  
+							
+							 <textbox onOK="@command('get_data')" 
+							 width="160px" value="@bind(vm.searchValue)" placeholder="Item Code..."/>
+							 
+							<toolbarbutton label="Preview" image="/images/zoom.png" style="color:#666666;font-size:12px;" 
+							onClick="@command('get_data')"
+							tooltiptext="Click To View."
+							/>	
+							
+							<toolbarbutton label="Excel" image="/images/file_extension_xls.png" 
+						    onClick="@command('onCallExcel')"
+		            		style="color:#666666;font-size:12px;" 		       
+		            		tooltiptext="Click To Export To Excel File."
+		            		/>	          	   														   	             	   
+															
+						</hlayout>	
+		</toolbar>	
+	</north>
+     <center vflex="1">		          				        		
+	    <listbox vflex="1"
+	    model="@load(vm.model_list_item)" 
+		selectedItem="@bind(vm.select_item)" >
+					<listhead sizable="true" >
+						 <listheader label="#" width="40px" align="center" style="color:#FFFFFF;background-color:#990000"/>
+						 <listheader label="NG GROUP" width="140px" align="center" style="color:#FFFFFF;background-color:#990000"/>	
+						 <listheader label="ItemNO" width="100px"  align="center" style="color:#FFFFFF;background-color:#990000"/>
+						 <listheader label="Date"  width="100px" align="center" style="color:#FFFFFF;background-color:#990000"/>	
+						 <listheader label="Type NG" width="250px"  align="center" style="color:#FFFFFF;background-color:#990000"/>
+						 <listheader label="Process Name" width="300px" align="center" style="color:#FFFFFF;background-color:#990000"/>
+						 <listheader label="Slip number" width="120px" align="center" style="color:#FFFFFF;background-color:#990000"/>	
+					     <listheader label="NG" width="70px" align="center" style="color:#FFFFFF;background-color:#990000"/>				   					    																					    	
+					</listhead>
+					<template name="model" var="item">
+						<listitem>
+							<listcell label="@load(item.row_number)" style="font-weight:bold;color:#333333;font-size:12px;"></listcell>
+							<listcell label="@load(item.ng_group)" style="text-align:left;"></listcell>	
+							<listcell label="@load(item.item_no)" style="font-weight:bold;color:#333333;font-size:12px;text-align:left;"></listcell>
+							<listcell label="@load(vm.formatDateString(item.defec_Date_d))" ></listcell>
+							<listcell label="@load(item.type_NG)" style="font-weight:bold;color:#333333;font-size:12px;text-align:left;"></listcell>
+							<listcell label="@load(item.process_Name)" style="text-align:left;"></listcell>	
+							<listcell label="@load(item.slip_number)" style="text-align:left;"></listcell>					    					   						                									  
+							<listcell label="@load(vm.formatSring(item.ng_qty))" style="font-weight:bold;color:#990000;font-size:13px;text-align:right;"></listcell>																											
+						</listitem>
+					</template>
+				</listbox>				
+	</center>
+		
+	</borderlayout>	
+	
+	</window>
+</zk>
